@@ -1,5 +1,4 @@
 #! /bin/bash
-set +
 root_dir=~/work/lending_club
 project_dir=$root_dir/banking
 rm -rf $project_dir/target
