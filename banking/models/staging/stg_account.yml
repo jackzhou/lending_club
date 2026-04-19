@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: stg_accounts
+    columns:
+      - name: account_id
+        tests:
+          - not_null
+          - unique
+
+      - name: customer_id
+        tests:
+          - not_null
+
+    
+
+      - name: account_type
+        tests:
+          - accepted_values:
+              values: ['savings', 'checking']

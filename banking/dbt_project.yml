@@ -1,0 +1,26 @@
+name: lending_project
+version: 1.0
+profile: lending_project
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+seed-paths: ["seeds"]
+
+models:
+  lending_project:
+    landing_zone:
+      +materialized: view
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table
+
+seeds:
+  lending_project:
+    +header: true
+
+    customers:
+      +column_types:
+        CustomerID: varchar
+        Name: varchar
+        HasLoan: varchar
