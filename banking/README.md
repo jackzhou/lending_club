@@ -64,7 +64,7 @@ docker run --rm -p 3000:3000 --env-file .env lending-dbt
 docker run --rm -p 3000:3000 -v "$(pwd):/app" --env-file .env lending-dbt
 ```
 
-Then open **http://localhost:3000** in a browser.
+Then open **[http://localhost:3000](http://localhost:3000)** in a browser.
 
 ## Output
 
@@ -80,15 +80,4 @@ Fields:
 - interest_rate_applied
 - annual_interest_amount
 - new_balance
-
----
-
-## Notes
-
-- DuckDB stores data in a single file (`lending.duckdb`)
-- dbt seeds are used as the raw data layer
-- Staging models enforce data quality
-- Mart model applies business logic
-
----
 
