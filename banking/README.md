@@ -12,13 +12,17 @@ The pipeline processes customer and account data, applies data cleaning, and cal
 
 For assumptions, trade-offs, and design decisions, see **REVIEWER_NOTES.md**.
 
+The result file account_summary.csv is include
+
+There is a also a ppt file : Account Summary .ppt
+
 ---
 
 ## Prerequisites
 
 - **Docker** — Install [Docker Desktop](https://docs.docker.com/get-docker/) (or Docker Engine on Linux).
 - **Python 3.11** — The `lending-dbt` image is based on `python:3.11-slim`; use 3.11 for any host-side tooling if needed.
-  - do this in the banking folder: python3.11 -m venv .venv                                  
+  - do this in the banking folder: python3.11 -m venv .venv
 - **Environment file** — Copy `env` to `.env`, then fill in values:
   - **Download (S3 / HTTP):** set `ACCOUNTS_CSV_URL` to the public HTTPS URL for `accounts.csv` (the sample `env` includes the assignment URL).
   - **Upload to Databricks:** set `DATABRICKS_HOST`, `DATABRICKS_TOKEN`, and `DBFS_PATH` so the summary can be copied to a DBFS path in your workspace (see comments in `env`).
