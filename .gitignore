@@ -17,3 +17,4 @@ dbt_logs/
 .DS_Store
 .dagster/
 dbx_env.sh
+tmp*
