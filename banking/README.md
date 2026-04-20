@@ -10,7 +10,7 @@ This project implements a data pipeline for interest calculation in a banking sy
 
 The pipeline processes customer and account data, applies data cleaning, and calculates interest for savings accounts.
 
-For assumptions, trade-offs, and design decisions, see **REVIEWER_NOTES.md**.
+For assumptions, trade-offs, and design decisions, see **[REVIEWER_NOTES.md](REVIEWER_NOTES.md)**.
 
 The result file account_summary.csv is include
 
