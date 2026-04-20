@@ -2,58 +2,32 @@
 
 ## Overview
 
-This project implements a data pipeline for a banking system using:
+This project implements a data pipeline for a inerest calcuation banking system built on:
 
-- dbt (data transformation)
-- DuckDB (analytical database)
-- Docker (reproducibility)
+- **DuckDB** — analytical database
+- **dbt** — transformations and tests
+- **Dagster** — orchestration
+
 
 The pipeline processes customer and account data, applies data cleaning, and calculates interest for savings accounts.
+
+For assumptions, trade-offs, and design decisions, see **REVIEWER_NOTES.md**.
 
 ---
 
 ## Pipeline Architecture
 
-CSV (seeds)
+1. Load raw data
   ↓
-Staging (data cleaning & normalization)
+2. Clean up and standardize the data
   ↓
-Mart (business logic: interest calculation)
+3. **Calculate interest**
+  ↓
+4. Export data
 
----
 
-## Key Features
 
-- Data cleaning:
-  - Trim whitespace
-  - Normalize casing
-  - Handle malformed values using `TRY_CAST`
-- Data validation:
-  - Filter invalid AccountID and CustomerID
-- Business logic:
-  - Tiered interest rates
-  - Bonus rate for customers with loans
-- Reusable macro:
-  - `interest_rate_calc`
 
----
-
-## Interest Rules
-
-- Balance < 10,000 → 1%
-- 10,000 ≤ Balance < 20,000 → 1.5%
-- Balance ≥ 20,000 → 2%
-- Bonus: +0.5% if customer has a loan
-
----
-
-## Handling Bad Data
-
-- Malformed or missing balance → treated as NULL
-- Interest rate defaults to 0 for NULL balance
-- Derived values remain NULL to preserve correctness
-
----
 
 ## How to Run
 
@@ -66,11 +40,8 @@ docker build -t lending-dbt .
 ### Run pipeline
 
 ```bash
-docker run --rm -v $(pwd):/app lending-dbt dbt test
-docker run --rm -v $(pwd):/app lending-dbt dbt run
+docker run --rm -p 3000:3000 -e DATABRICKS_HOST -e DATABRICKS_TOKEN  -v $(pwd):/app lending-dbt # dagster piple run 
 ```
-
----
 
 ## Output
 
