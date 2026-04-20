@@ -41,16 +41,30 @@ For assumptions, trade-offs, and design decisions, see **REVIEWER_NOTES.md**.
 ```bash
 docker build -t lending-dbt .
 ```
+
 or for a clean build:
+
 ```bash
 docker build --no-cache -t lending-dbt .
 ```
 
 ### Run pipeline
 
+From the `banking/` directory (same folder as the `Dockerfile`). The container starts **Dagster dev** on port **3000** (see image `CMD`).
+
+**Without a bind mount** — runs the project files that were **copied into the image at build time**:
+
 ```bash
-docker run --rm -p 3000:3000 -v "$(pwd)":/app --env-file .env lending-dbt
+docker run --rm -p 3000:3000 --env-file .env lending-dbt
 ```
+
+**With a bind mount** — mounts your **current directory** to `/app` so local edits to SQL, Python, and `lending.duckdb` show up without rebuilding (useful while debugging):
+
+```bash
+docker run --rm -p 3000:3000 -v "$(pwd):/app" --env-file .env lending-dbt
+```
+
+Then open **http://localhost:3000** in a browser.
 
 ## Output
 
