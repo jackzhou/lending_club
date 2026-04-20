@@ -2,16 +2,25 @@
 
 ## Overview
 
-This project implements a data pipeline for a inerest calcuation banking system built on:
+This project implements a data pipeline for interest calculation in a banking system, built on:
 
 - **DuckDB** — analytical database
 - **dbt** — transformations and tests
 - **Dagster** — orchestration
 
-
 The pipeline processes customer and account data, applies data cleaning, and calculates interest for savings accounts.
 
 For assumptions, trade-offs, and design decisions, see **REVIEWER_NOTES.md**.
+
+---
+
+## Prerequisites
+
+- **Docker** — Install [Docker Desktop](https://docs.docker.com/get-docker/) (or Docker Engine on Linux).
+- **Python 3.11** — The `lending-dbt` image is based on `python:3.11-slim`; use 3.11 for any host-side tooling if needed.
+- **Environment file** — Copy `env` to `.env` (`cp env .env`), then fill in values:
+  - **Download (S3 / HTTP):** set `ACCOUNTS_CSV_URL` to the public HTTPS URL for `accounts.csv` (the sample `env` includes the assignment URL).
+  - **Upload to Databricks:** set `DATABRICKS_HOST`, `DATABRICKS_TOKEN`, and `DBFS_PATH` so the summary can be copied to a DBFS path in your workspace (see comments in `env`).
 
 ---
 
@@ -25,10 +34,6 @@ For assumptions, trade-offs, and design decisions, see **REVIEWER_NOTES.md**.
   ↓
 4. Export data
 
-
-
-
-
 ## How to Run
 
 ### Build Docker image
@@ -36,11 +41,15 @@ For assumptions, trade-offs, and design decisions, see **REVIEWER_NOTES.md**.
 ```bash
 docker build -t lending-dbt .
 ```
+or for a clean build:
+```bash
+docker build --no-cache -t lending-dbt .
+```
 
 ### Run pipeline
 
 ```bash
-docker run --rm -p 3000:3000 -e DATABRICKS_HOST -e DATABRICKS_TOKEN  -v $(pwd):/app lending-dbt # dagster piple run 
+docker run --rm -p 3000:3000 -v "$(pwd)":/app --env-file .env lending-dbt
 ```
 
 ## Output
@@ -69,6 +78,3 @@ Fields:
 
 ---
 
-## Author
-
-Jinyuan Zhou

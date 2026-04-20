@@ -1,6 +1,19 @@
+# -----------------------------------------------------------------------------
+# Copy to ".env" for Docker:  cp env .env   then:  docker run ... --env-file .env
+# -----------------------------------------------------------------------------
+
+# --- Databricks (upload_summary.sh: copy account_summary.csv into the workspace) ---
+# Required for upload. Token: Workspace → user icon → Settings → Developer → Access tokens
 DATABRICKS_TOKEN=
-DATABRICKS_HOST=
-ACCOUNTS_CSV_URL=
-DBFS_PATH=
 
+# Workspace URL only (no trailing slash). Example shape — replace with yours from the browser:
+DATABRICKS_HOST=https://dbc-xxxxxxxxxxxx.cloud.databricks.com
 
+# Full DBFS file path for the upload (not a local path). CLI: databricks fs cp ... $DBFS_PATH
+# Example using /FileStore (works on most workspaces). Unity Catalog volumes also work, e.g.
+# dbfs:/Volumes/<catalog>/<schema>/<volume>/account_summary.csv
+DBFS_PATH=dbfs:/FileStore/lending_club/account_summary.csv
+
+# --- AWS / HTTP (download_account.py: DuckDB read_csv over HTTPS; no AWS keys for public objects) ---
+# Public S3/HTTPS URL for accounts.csv (assignment dataset).
+ACCOUNTS_CSV_URL=https://lendingclub-assignment.s3.us-west-2.amazonaws.com/accounts.csv
